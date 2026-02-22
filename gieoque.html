@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gieo Quẻ Bính Ngọ 2026</title>
+    <style>
+        /* --- GIỮ NGUYÊN CSS CŨ --- */
+        body {
+            background-color: #b71c1c; /* Đỏ Tết */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            /* Thêm pattern nền nhẹ cho đỡ trống */
+            background-image: radial-gradient(circle, #d32f2f 10%, transparent 10%), radial-gradient(circle, #d32f2f 10%, transparent 10%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10; /* Đảm bảo nội dung nằm trên pháo hoa */
+        }
+
+        h1 {
+            color: #ffd700; /* Vàng kim */
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* Phần hiển thị thẻ bài/kết quả */
+        .card-container {
+            width: 280px;
+            height: 380px;
+            background: #fff;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0 auto 30px;
+            position: relative;
+            border: 4px solid #ffd700;
+            background-image: url('https://www.transparenttextures.com/patterns/rice-paper-2.png');
+        }
+
+        /* Hiệu ứng lắc */
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        .hidden {
+            display: none !important; /* Thêm important để chắc chắn ẩn */
+        }
+
+        #card-back {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #result-content {
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #result-content h2 {
+            color: #c62828;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            border-bottom: 2px solid #ffd700;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        #result-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Nút bấm */
+        button {
+            background: linear-gradient(to bottom, #ffd700, #ffb300);
+            color: #b71c1c;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #c6a700, 0 15px 20px rgba(0,0,0,0.2);
+            transition: all 0.1s;
+            outline: none;
+        }
+
+        button:active {
+            box-shadow: 0 2px 0 #c6a700, 0 5px 10px rgba(0,0,0,0.2);
+            transform: translateY(4px);
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #ffd700;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gieo Quẻ Bính Ngọ 2026</h1>
+        
+        <div class="card-container" id="cardArea">
+            <div id="card-back">
+                <div style="font-size: 6rem; color: #d32f2f; line-height: 1;">🧧</div> 
+                <p style="font-size: 1.2rem; font-weight: bold; color: #d32f2f; margin-top: 20px;">Xin lộc đầu xuân</p>
+            </div>
+
+            <div id="result-content" class="hidden">
+                <h2 id="fortune-title">Tiêu Đề</h2>
+                <p id="fortune-text">Nội dung quẻ sẽ hiện ở đây</p>
+            </div>
+        </div>
+
+        <button onclick="drawFortune()" id="drawBtn">Rút Quẻ Ngay</button>
+
+        <div class="footer">Code & Design by You</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // Dữ liệu quẻ
+        const fortunes = [
+            { title: "Tài Lộc Phi Mã", text: "Tiền vào cửa trước, vàng vào cửa sau. Năm nay két sắt nhà bạn cần nâng cấp gấp vì quá tải!" },
+            { title: "Tình Duyên Nở Rộ", text: "Vận đào hoa ập đến không kịp đỡ. Người ấy đang phi nước đại đến bên bạn rồi, chuẩn bị tinh thần đi!" },
+            { title: "Sự Nghiệp Thăng Hoa", text: "KPI tự hoàn thành, sếp tự tăng lương. Năm nay bạn làm ít hưởng nhiều, thăng tiến vù vù." },
+            { title: "Sức Khỏe Dồi Dào", text: "Ăn trâu, ngủ kỹ, tinh thần phơi phới. Sức khỏe năm nay 'trâu bò' không ai bằng." },
+            { title: "Học Tập Bá Đạo", text: "Não bộ được khai sáng, học 1 hiểu 10. Mùa thi cử này cứ gọi là 'out trình' cả lớp." },
+            { title: "Vạn Sự Như Ý", text: "Muốn gì được nấy, cầu được ước thấy. Cẩn thận kẻo ước nhiều quá không biết hưởng cái nào trước!" },
+            { title: "Thần Thái Đỉnh Cao", text: "Năm nay visual lên hương, đi đổ rác cũng thần thái. Ra đường nhớ mang khẩu trang kẻo người ta ngất vì đẹp." }
+        ];
+
+        let isAnimating = false;
+
+        // --- HÀM BẮN PHÁO HOA MỚI THÊM ---
+        function fireConfetti() {
+            var duration = 1.5 * 1000; // Kéo dài 1.5 giây
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                var particleCount = 50 * (timeLeft / duration);
+                
+                // Bắn 2 luồng từ 2 bên góc dưới
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#d32f2f', '#ffd700', '#ffffff'] // Đỏ, Vàng, Trắng
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#d32f2f', '#ffd700', '#ffffff']
+                }));
+            }, 250);
+        }
+
+        function drawFortune() {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const cardArea = document.getElementById('cardArea');
+            const btn = document.getElementById('drawBtn');
+            const back = document.getElementById('card-back');
+            const result = document.getElementById('result-content');
+
+            // Reset trạng thái
+            result.classList.add('hidden');
+            back.classList.remove('hidden');
+            btn.innerText = "Đang lắc ống xăm...";
+            btn.disabled = true; // Khóa nút khi đang lắc
+
+            // Thêm hiệu ứng lắc
+            cardArea.classList.add('shake');
+
+            // Sau 1.2 giây thì hiện kết quả và bắn pháo hoa
+            setTimeout(() => {
+                cardArea.classList.remove('shake');
+                
+                const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+                
+                document.getElementById('fortune-title').innerText = randomFortune.title;
+                document.getElementById('fortune-text').innerText = randomFortune.text;
+
+                back.classList.add('hidden');
+                result.classList.remove('hidden');
+                
+                // --- KÍCH HOẠT BẮN PHÁO HOA TẠI ĐÂY ---
+                fireConfetti(); 
+
+                btn.innerText = "Rút quẻ khác";
+                btn.disabled = false;
+                isAnimating = false;
+            }, 1200); 
+        }
+    </script>
+</body>
+</html>
